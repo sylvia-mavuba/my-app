@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="blogApp">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title><%= title %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="main.css" rel="stylesheet"></head>
+</head>
+<body>
+
+  <div class="hello-world">
+    <h1><%= message %></h1>
+  </div>
+  <a href="/login">login</a>
+
+  <div id="blogApp-app">
+      <search-restaurants></search-restaurants>
+  </div>
+
+  <script src="app.js"></script>
+
+  <script type="text/javascript">
+      angular.module('blogApp.App', []);
+      var searchRestaurantsDirective = function () {
+          return {
+              restrict: 'E',
+              replace: true,
+              templateUrl: 'commonViews/views/search-restaurant-component.html',
+              scope:{},
+              link: function(scope, element, attrs){
+                  console.log('je suis dans la directive search');
+
+              },
+              controller: function() {
+                  debugger
+              },
+              controllerAs: 'searchRestaurantsCtrl'
+          };
+      };
+
+      angular.module('blogApp.App');
+      angular.directive('searchRestaurants', searchRestaurantsDirective);
+  </script>
+  <!-- <script src="libs.js"></script> -->
+</body>
+</html>
