@@ -2,19 +2,26 @@
 //----CONFIG----
 //--------------//
 var express = require('express');
+var path = require('path');
 var app = express();
 var mongoose = require('mongoose');
 var cors = require('cors');
 var bodyParser = require('body-parser');
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:true}));
-app.set('view engine', 'ejs');
+var compression = require('compression');
 
 var port = process.env.PORT || 3000;
 var mongoUri = process.env.MONGODB_URI || 'mongodb://localhost/articles';
 
+//---- View engine setup
+app.set('view engine', 'ejs');
+app.set('views', 'views');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+//app.use(express.static(path.join(__dirname, '/build')));
 app.use(express.static('public'));
+app.use(compression());
+
 
 mongoose.connect(mongoUri, function(err, res) {
   if (err) console.log('ERROR connecting to: ' + mongoUri + '. ' + err);
@@ -40,6 +47,7 @@ app.get('/articles', function (req, res) {
 app.get('/restaurants', function (req, res) {
     res.render('restaurants', { title: 'Mes restaurants ', message: 'Pages de mes restaurants favories' });
 });
+
 
 //--------------
 //-----MODEL----
