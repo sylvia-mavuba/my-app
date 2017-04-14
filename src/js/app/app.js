@@ -5,42 +5,52 @@
 require('../../scss/main.scss');
 
 
-var angular = require('angular');
-var home = require('./home/home.js');
+var angular          = require('angular');
+var home             = require('./home/homeCtrl.js');
+var loadRestaurants  = require('./home/getRestaurants').getRestaurant;
 
 (function () {
     'use strict';
 
     var blogApp = angular.module('blogApp', ['ui.router']);
 
-    blogApp.config( function ($stateProvider, $urlRouterProvider) {
+    blogApp
+        .config( function ($stateProvider, $urlRouterProvider) {
 
-        $urlRouterProvider.otherwise('/home');
+            $urlRouterProvider.otherwise('/home');
 
-        // STATES ===============================================
-        $stateProvider
-            .state('home', {
-                url: '/home',
-                templateUrl: 'home.html',
-                controller: 'homeCtrl'
+            // STATES ===============================================
+            $stateProvider
+                .state('home', {
+                    url: '/home',
+                    templateUrl: 'home.html',
+                    controller: 'homeCtrl'
+                })
 
-            })
-
-            .state('about', {
-                url: '/about',
-                templateUrl: 'about.html',
-                controller: 'aboutCtrl'
-            })
-        }
-    );
+                .state('about', {
+                    url: '/about',
+                    templateUrl: 'about.html',
+                    controller: 'aboutCtrl'
+                })
+            }
+        );
 
     // CONTROLLERS ============================================
-    blogApp.controller('homeCtrl', home);
+    .controller('homeCtrl', home);
 
-    blogApp.controller('aboutCtrl', function ($scope) {
-        debugger
+    .controller('RestoCtrl', resto);
+
+    .controller('aboutCtrl', function ($scope) {
         console.log('je suis dans about');
     })
+
+    // SERVICES ============================================
+    .service('utilsService', function () {
+
+        loadRestaurants: function (data) {
+            debugger
+        }
+    });
 
 
 }());
