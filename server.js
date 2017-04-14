@@ -9,7 +9,7 @@ var cors = require('cors');
 var bodyParser = require('body-parser');
 var compression = require('compression');
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 4000;
 var mongoUri = process.env.MONGODB_URI || 'mongodb://localhost/articles';
 
 //---- View engine setup
