@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
-var Articles = mongoose.model('Articles', {
+
+var Articles = new mongoose.Schema({
     text: String,
     done: Boolean
 });

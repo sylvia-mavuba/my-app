@@ -29,42 +29,41 @@ mongoose.connect(mongoUri, function(err, res) {
 });
 
 
-//----------------
-//--PAGE ROUTE----
-//--------------//
 app.get('/', function (req, res) {
     res.render('main', { title: 'My blog', message: 'Hello World' });
 });
 
-app.get('/login', function (req, res) {
-    res.render('login', { title: 'Login ', message: 'Login page' });
-});
+//----------------
+//--PAGE ROUTE----
+//--------------//
+// app.get('/', function (req, res) {
+//     res.render('main', { title: 'My blog', message: 'Hello World' });
+// });
+//
+// app.get('/login', function (req, res) {
+//     res.render('login', { title: 'Login ', message: 'Login page' });
+// });
+//
+// app.get('/articles', function (req, res) {
+//     res.render('articles', { title: 'Mes articles', message: 'Pages de mes articles' });
+// });
+//
+// app.get('/restaurants', function (req, res) {
+//     res.render('restaurants', { title: 'Mes restaurants ', message: 'Pages de mes restaurants favories' });
+// });
 
-app.get('/articles', function (req, res) {
-    res.render('articles', { title: 'Mes articles', message: 'Pages de mes articles' });
-});
 
-app.get('/restaurants', function (req, res) {
-    res.render('restaurants', { title: 'Mes restaurants ', message: 'Pages de mes restaurants favories' });
-});
-
-
-//--------------
-//-----MODEL----
-//------------//
-var Articles = require('./articles-model.js').Articles;
-
-//--------------
-//-----API------
-//------------//
-
+// //--------------
+// //-----API------
+// //------------//
+//
 //*use mongoose to get all restaurants in the database
-app.get('/api/articles', function (req, res) {
-  Articles.find({}, function(error, data){
-    if (error) throw error;
-    else res.json({ 'articles': data });
-  });
-});
+// app.get('/api/articles', function (req, res) {
+//   Articles.find({}, function(error, data){
+//     if (error) throw error;
+//     else res.json({ 'articles': data });
+//   });
+// });
 
 
 //------------------

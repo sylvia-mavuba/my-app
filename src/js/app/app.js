@@ -7,15 +7,16 @@ require('../../scss/main.scss');
 
 var angular          = require('angular');
 var home             = require('./home/homeCtrl.js');
-var loadRestaurants  = require('./home/getRestaurants').getRestaurant;
+var articles         = require('./articles/articleCtrl.js');
+var articlesService  = require('./articles/articleService.js');
+//var loadRestaurants  = require('./home/getRestaurants').getRestaurant;
 
 (function () {
     'use strict';
 
     var blogApp = angular.module('blogApp', ['ui.router']);
 
-    blogApp
-        .config( function ($stateProvider, $urlRouterProvider) {
+    blogApp.config( function ($stateProvider, $urlRouterProvider) {
 
             $urlRouterProvider.otherwise('/home');
 
@@ -27,30 +28,24 @@ var loadRestaurants  = require('./home/getRestaurants').getRestaurant;
                     controller: 'homeCtrl'
                 })
 
-                .state('about', {
-                    url: '/about',
-                    templateUrl: 'about.html',
-                    controller: 'aboutCtrl'
+                .state('articles', {
+                    url: '/articles',
+                    templateUrl: 'articles.html',
+                    controller: 'articlesCtrl'
                 })
+
             }
         );
 
     // CONTROLLERS ============================================
-    .controller('homeCtrl', home);
+    blogApp.controller('homeCtrl', home);
 
-    .controller('RestoCtrl', resto);
+    blogApp.controller('articlesCtrl', articles);
 
-    .controller('aboutCtrl', function ($scope) {
-        console.log('je suis dans about');
-    })
+
 
     // SERVICES ============================================
-    .service('utilsService', function () {
-
-        loadRestaurants: function (data) {
-            debugger
-        }
-    });
+    blogApp.service('articleService', articlesService);
 
 
 }());

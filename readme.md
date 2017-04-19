@@ -2,6 +2,7 @@
 https://scotch.io/tutorials/creating-a-single-page-todo-app-with-node-and-angular
 http://scotch.io/tutorials/javascript/angular-routing-using-ui-router
 http://macr.ae/article/splitting-gulpfile-multiple-files.html
+http://www.bogotobogo.com/MEAN-Stack/MEAN-Stack-MongoDB-ExpressJS-AngularJS-NodeJS-ToDoList-App.php
 
 Url : http://localhost:3000/addinfo
 
