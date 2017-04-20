@@ -33,37 +33,48 @@ app.get('/', function (req, res) {
     res.render('main', { title: 'My blog', message: 'Hello World' });
 });
 
-//----------------
-//--PAGE ROUTE----
-//--------------//
-// app.get('/', function (req, res) {
-//     res.render('main', { title: 'My blog', message: 'Hello World' });
-// });
-//
-// app.get('/login', function (req, res) {
-//     res.render('login', { title: 'Login ', message: 'Login page' });
-// });
-//
-// app.get('/articles', function (req, res) {
-//     res.render('articles', { title: 'Mes articles', message: 'Pages de mes articles' });
-// });
-//
-// app.get('/restaurants', function (req, res) {
-//     res.render('restaurants', { title: 'Mes restaurants ', message: 'Pages de mes restaurants favories' });
-// });
 
+//-----------------------
+//------API Articles-----
+//----------------------//
+var Articles = require('./article-model.js').Articles;
 
-// //--------------
-// //-----API------
-// //------------//
-//
-//*use mongoose to get all restaurants in the database
-// app.get('/api/articles', function (req, res) {
-//   Articles.find({}, function(error, data){
-//     if (error) throw error;
-//     else res.json({ 'articles': data });
-//   });
-// });
+app.get('/api/articles', function (req, res) {
+  Articles.find({}, function(error, articles){
+    if (error) throw error;
+    else res.json({ 'articles': articles });
+  });
+});
+
+app.post('/api/articles', function (req, res) {
+    Articles.create({
+        title: req.body.title,
+        text: req.body.text,
+        autor: req.body.autor
+    }, function (err, article) {
+        if (err)
+            res.send(err);
+
+        Articles.find(function (err, articles) {
+            if (err)
+                res.send(err);
+            res.json(articles);
+        });
+    });
+});
+
+app.delete('/api/articles/:article_id', function (req, res) {
+    Articles.remove({
+        _id: req.params.article_id
+    }, function (err, data) {
+        if (err) { res.send(err); }
+
+        Articles.find(function (err, articles) {
+            if (err) { res.send(err); }
+            res.json(articles);
+        });
+    });
+});
 
 
 //------------------

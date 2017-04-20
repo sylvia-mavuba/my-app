@@ -2,7 +2,8 @@ var mongoose = require('mongoose');
 
 var Articles = mongoose.model('Articles', {
     text: String,
-    done: Boolean
+    autor: String,
+    title: String
 });
 
 
