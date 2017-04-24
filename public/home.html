@@ -1,14 +1,15 @@
+<div class="row">
+    <form ng-controller="homeCtrl">
+        <div class="form-group">
+            <label for="">Mots clés</label>
+            <input type="text" class="form-control" id="" placeholder="food, food, food ..." ng-model="searchInfo.inputValue">
+        </div>
 
-<form ng-controller="homeCtrl">
-      <div class="form-group">
-        <label for="">Mots clés</label>
-        <input type="text" class="form-control" id="" placeholder="food, food, food ...">
-      </div>
-
-      <div class="checkbox">
-          <label>
-              <input type="checkbox"> Vider le champs
-          </label>
-      </div>
-      <button type="submit" class="btn btn-default">Recherche</button>
-</form>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox"> Vider le champs
+            </label>
+        </div>
+        <button type="submit" id="js-btn-search-restaurant" class="btn btn-default" ng-click="showRestaurant()">Recherche</button>
+    </form>
+</div>

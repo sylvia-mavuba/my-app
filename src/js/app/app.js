@@ -34,6 +34,11 @@ var articlesService  = require('./articles/articleService.js');
                     controller: 'articlesCtrl'
                 })
 
+                .state('login', {
+                    url: '/login',
+                    templateUrl: 'login.html',
+                    controller: 'loginCtrl'
+                })
             }
         );
 

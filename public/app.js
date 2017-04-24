@@ -1,6 +1,6 @@
 webpackJsonp([0],{
 
-/***/ 190:
+/***/ 118:
 /***/ (function(module, exports) {
 
 //require('./api-article.js');
@@ -19,10 +19,9 @@ module.exports = function ($scope, $http) {
     //     console.log('Error: ', data);
     // })
 
+    //.success ne marche pas avec angular 1.6
     .then(function (data) {
-        debugger;
-        $scope.articles = data.data.articles;
-        $scope.articles.autor = data.data.articles.autor;
+        $scope.articles = data;
         console.log(data);
     }, function (data) {
         console.log('Error: ', data);
@@ -31,7 +30,6 @@ module.exports = function ($scope, $http) {
     $scope.createArticle = function () {
         $http.post('/api/articles', $scope.formData).then(function (data) {
             $scope.formData = {};
-            $scope.articles = data.data.articles;
             console.log(data);
         }, function (data) {
             console.log('Error: ', data);
@@ -50,7 +48,7 @@ module.exports = function ($scope, $http) {
 
 /***/ }),
 
-/***/ 191:
+/***/ 119:
 /***/ (function(module, exports) {
 
 module.exports = function ($http) {
@@ -69,39 +67,66 @@ module.exports = function ($http) {
 
 /***/ }),
 
-/***/ 192:
+/***/ 120:
 /***/ (function(module, exports) {
 
-module.exports = function ($scope) {
-    vm = this;
-    //debugger
+//var loadResult = require('./getRestaurants').getRestaurant;
+
+module.exports = function ($scope, $http) {
+
     console.log('je suis dans la home');
 
-    vm.showRestaurant = function () {};
+    $scope.searchInfo = {};
+
+    $scope.showRestaurant = function (inputValue, $http) {
+        debugger;
+
+        // var renderKeyWord = function() {
+        //     var space = ' ';
+        //     $scope.searchInfo.inputValue;
+        // }
+
+        var showKeyWord = function () {
+            var inputValue = $scope.searchInfo.inputValue;
+        };
+
+        debugger;
+
+        // loadResult(inputValue, function(data, $http) {
+        //     debugger
+        // });
+    };
+
+    $http.get('/api/restaurants').then(function (response) {
+        //$scope.response = response.data;
+        console.log(response);
+    }, function (response) {
+        console.log('Error: ', response);
+    });
 };
 
 /***/ }),
 
-/***/ 193:
+/***/ 121:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 206:
+/***/ 125:
 /***/ (function(module, exports, __webpack_require__) {
 
 //require('./app/appModule.js');
 //https://scotch.io/tutorials/animating-angularjs-apps-ngview
 
 //ici je déclenche la compilation du fichier css
-__webpack_require__(193);
+__webpack_require__(121);
 
-var angular = __webpack_require__(30);
-var home = __webpack_require__(192);
-var articles = __webpack_require__(190);
-var articlesService = __webpack_require__(191);
+var angular = __webpack_require__(1);
+var home = __webpack_require__(120);
+var articles = __webpack_require__(118);
+var articlesService = __webpack_require__(119);
 //var loadRestaurants  = require('./home/getRestaurants').getRestaurant;
 
 (function () {
@@ -122,6 +147,10 @@ var articlesService = __webpack_require__(191);
             url: '/articles',
             templateUrl: 'articles.html',
             controller: 'articlesCtrl'
+        }).state('login', {
+            url: '/login',
+            templateUrl: 'login.html',
+            controller: 'loginCtrl'
         });
     });
 
@@ -136,4 +165,4 @@ var articlesService = __webpack_require__(191);
 
 /***/ })
 
-},[206]);
+},[125]);

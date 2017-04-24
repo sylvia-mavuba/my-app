@@ -15,10 +15,9 @@ module.exports = function ($scope, $http) {
         //     console.log('Error: ', data);
         // })
 
+        //.success ne marche pas avec angular 1.6
         .then(function (data) {
-            debugger
-            $scope.articles = data.data.articles;
-            $scope.articles.autor = data.data.articles.autor;
+            $scope.articles = data;
             console.log(data);
         }, function (data) {
             console.log('Error: ', data);
@@ -28,7 +27,6 @@ module.exports = function ($scope, $http) {
         $http.post('/api/articles', $scope.formData)
             .then(function (data) {
                 $scope.formData = {};
-                $scope.articles = data.data.articles;
                 console.log(data);
             }, function (data) {
                 console.log('Error: ', data);
