@@ -33,27 +33,30 @@ app.get('/', function (req, res) {
     res.render('main', { title: 'My blog', message: 'Hello World' });
 });
 
-//-- Je veux pouvoir me connecter à plusieurs collections
-var connectionBddArticles      = mongoose.createConnection('mongodb://localhost/articles');
-var connectionBddRestaurant     = mongoose.createConnection('mongodb://localhost/restaurants');
+//--------------------------------------
+//--------------Connection--------------
+//---------Multiple Collections---------
+//--------------------------------------//
+var mongoUriArticles   = mongoose.createConnection('mongodb://localhost/articles');
+var mongoUriRestaurant = mongoose.createConnection('mongodb://localhost/restaurants');
 
-
-var ModelArticles    = connectionBddArticles.model('Model', new mongoose.Schema({
+var ModelArticles    = mongoUriArticles.model('Model', new mongoose.Schema({
     text: String,
     autor: String,
     title: String
 }));
 
-var ModelRestaurant    = connectionBddRestaurant.model('Model', new mongoose.Schema({
-  title : { type : String, default : 'model in testB database' }
+var ModelRestaurant = mongoUriRestaurant.model('Model', new mongoose.Schema({
+    name: String,
+    city: String,
+    address: String,
+    description: String,
+    rating: Number
 }));
-
 
 //-----------------------
 //------API Articles-----
 //----------------------//
-//var Articles = require('./article-model.js').Articles;  --> marche
-
 app.get('/api/articles', function (req, res) {
   ModelArticles.find({}, function(error, articles){
     if (error) throw error;
@@ -95,15 +98,6 @@ app.delete('/api/articles/:article_id', function (req, res) {
 //-----------------------
 //------API Articles-----
 //----------------------//
-//var Restaurants = require('./restaurant-model.js').Restaurants;
-
-// app.get('api/restaurants', function (req, res) {
-//     Restaurants.find({}, function(error, restaurants){
-//       if (error) throw error;
-//       else res.json({ 'restaurants': restaurants });
-//     });
-// });
-
 app.get('/api/restaurants', function (req, res) {
   ModelRestaurant.find({}, function(error, data){
     if (error) throw error;

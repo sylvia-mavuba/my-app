@@ -1,72 +1,5 @@
 webpackJsonp([0],{
 
-/***/ 118:
-/***/ (function(module, exports) {
-
-//require('./api-article.js');
-
-module.exports = function ($scope, $http) {
-    console.log('je suis dans le controller articles');
-
-    $scope.formData = {};
-
-    $http.get('/api/articles')
-    // .success(function (data) {
-    //     $scope.articles = data;
-    //     console.log(data);
-    // })
-    // .error(function (data) {
-    //     console.log('Error: ', data);
-    // })
-
-    //.success ne marche pas avec angular 1.6
-    .then(function (data) {
-        $scope.articles = data;
-        console.log(data);
-    }, function (data) {
-        console.log('Error: ', data);
-    });
-
-    $scope.createArticle = function () {
-        $http.post('/api/articles', $scope.formData).then(function (data) {
-            $scope.formData = {};
-            console.log(data);
-        }, function (data) {
-            console.log('Error: ', data);
-        });
-    };
-
-    $scope.deleteArticle = function (id) {
-        $http.delete('/api/articles' + id).success(function (data) {
-            $scope.articles = data.data.articles;
-            console.log(data);
-        }).error(function (data) {
-            console.log('Error: ', data);
-        });
-    };
-};
-
-/***/ }),
-
-/***/ 119:
-/***/ (function(module, exports) {
-
-module.exports = function ($http) {
-    return {
-        get: function () {
-            return $http.get('/api/articles');
-        },
-        create: function (data) {
-            return $http.post('/api/articles', data);
-        },
-        delete: function (id) {
-            return $http.delete('/api/articles' + id);
-        }
-    };
-};
-
-/***/ }),
-
 /***/ 120:
 /***/ (function(module, exports) {
 
@@ -99,7 +32,7 @@ module.exports = function ($scope, $http) {
 
     $http.get('/api/restaurants').then(function (response) {
         //$scope.response = response.data;
-        console.log(response);
+        console.log('mes restaurants: ', response.data);
     }, function (response) {
         console.log('Error: ', response);
     });
@@ -125,9 +58,9 @@ __webpack_require__(121);
 
 var angular = __webpack_require__(1);
 var home = __webpack_require__(120);
-var articles = __webpack_require__(118);
-var articlesService = __webpack_require__(119);
-//var loadRestaurants  = require('./home/getRestaurants').getRestaurant;
+//var articlesCtrl     = require('./articles/articleCtrl.js');
+//var articlesService  = require('./articles/articleService.js');
+
 
 (function () {
     'use strict';
@@ -154,13 +87,61 @@ var articlesService = __webpack_require__(119);
         });
     });
 
+    // SERVICES ============================================
+    blogApp.service('articleService', ['$http', function ($http) {
+        this.getApiArticles = function () {
+            return $http.get('/api/articles')
+            //.success ne marche pas avec angular 1.6 ??
+            .then(function (response) {
+                debugger;
+                return response;
+
+                // if(response.data) {
+                //     for(var i=0; i < response.data.articles.length; i++) {
+                //         debugger
+                //         $scope.articles.text = response.data.articles[i].text;
+                //     }
+                // }
+
+
+                console.log('mes articles :', $scope.articles);
+            }, function (data) {
+                console.log('Error: ', data);
+            });
+        };
+
+        this.createArticle = function () {
+            return $http.post('/api/articles', $scope.bookData).then(function (response) {
+                debugger;
+                $scope.bookData = {};
+                $scope.bookData.article = response.data;
+                console.log(data);
+            }, function (data) {
+                console.log('Error: ', data);
+            });
+        };
+
+        this.deleteArticle = function (id) {
+            return $http.delete('/api/articles' + id).success(function (response) {
+                $scope.articles = data.data.articles;
+                console.log(data);
+            }).error(function (data) {
+                console.log('Error: ', data);
+            });
+        };
+    }]);
     // CONTROLLERS ============================================
     blogApp.controller('homeCtrl', home);
 
-    blogApp.controller('articlesCtrl', articles);
+    blogApp.controller('articlesCtrl', ['$scope', 'articleService', function ($scope, articleService) {
 
-    // SERVICES ============================================
-    blogApp.service('articleService', articlesService);
+        $scope.articlesData = {};
+
+        var receiveArticleData = articleService.getApiArticles().then(function (response) {
+            debugger;
+            $scope.articles = response.data;
+        });
+    }]);
 })();
 
 /***/ })

@@ -2,22 +2,26 @@
       <div class="form-group">
           <p><strong>Nbre articles existants :</strong> {{articles.length}}</p>
 
-          <div class="checkbox" ng-repeat="article in articles">
-                <label>
+          <div>
+                <!-- <label>
                     <input type="checkbox" ng-click="deleteArticle(article._id)"> {{ article.title }}
-                </label>
+                </label> -->
+                <p>Listes des articles :</p>
+                <ul>
+                    <li ng-repeat="article in articles">{{ article.title }}</li>
+                </ul>
             </div>
 
             <p>Création article :</p>
 
             <label for="">Title</label>
-            <input type="text" class="form-control" id="" placeholder="titre article" ng-model="formData.title">
+            <input type="text" class="form-control" id="" placeholder="titre article" ng-model="articlesData.title">
 
             <label for="">Texte</label>
-            <textarea name="" rows="8" cols="80" placeholder="corps article" ng-model="formData.text"></textarea>
+            <textarea name="" rows="8" cols="80" placeholder="corps article" ng-model="articlesData.text"></textarea>
 
             <label for="">Auteur</label>
-            <input type="text" class="form-control" id="" placeholder="auteur article" ng-model="formData.autor">
+            <input type="text" class="form-control" id="" placeholder="auteur article" ng-model="articlesData.author">
       </div>
 
       <button type="submit" class="btn btn-default" ng-click="createArticle()">Ajouter</button>

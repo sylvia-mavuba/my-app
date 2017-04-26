@@ -31,7 +31,7 @@ module.exports = function ($scope, $http) {
     $http.get('/api/restaurants')
         .then(function (response) {
             //$scope.response = response.data;
-            console.log(response);
+            console.log('mes restaurants: ',response.data);
         }, function (response) {
             console.log('Error: ', response);
         });
