@@ -369,7 +369,98 @@ template {
 [hidden] {
   display: none; }
 
+.slider-component {
+  position: relative;
+  top: 115px;
+  z-index: 5;
+  overflow: hidden;
+  height: 110px;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0); }
+  .slider-component__wrapper,
+  .slider-component .swipe-zone {
+    position: absolute;
+    width: 100%;
+    height: 80px; }
+  .slider-component .swipe-zone {
+    transition: -webkit-transform .4s;
+    transition: transform .4s;
+    transition: transform .4s, -webkit-transform .4s; }
+  .slider-component__slide {
+    position: absolute;
+    width: 100%;
+    height: 80px; }
+    .slider-component__slide:nth-child(2) {
+      left: 100%; }
+    .slider-component__slide:nth-child(3) {
+      left: 200%; }
+    .slider-component__slide__content {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      background-color: #fff;
+      color: #000;
+      opacity: .9;
+      border-radius: 6px;
+      width: 251px;
+      height: 72px;
+      margin: 0 auto; }
+      .slider-component__slide__content p {
+        margin: 0;
+        text-align: center;
+        text-transform: uppercase;
+        padding: 0 10px;
+        font-size: .87em; }
+    .slider-component__slide__svg {
+      display: none; }
+  .slider-component .more-info {
+    position: absolute;
+    bottom: -10px;
+    width: 100%;
+    text-align: center; }
+    .slider-component .more-info .hide {
+      display: none; }
+  .slider-component .slider-navigation {
+    position: absolute;
+    top: 95px;
+    width: 100%;
+    text-align: center; }
+    .slider-component .slider-navigation ul li {
+      position: relative;
+      display: inline-block;
+      margin: 3px;
+      width: 10px;
+      height: 10px; }
+      .slider-component .slider-navigation ul li a span {
+        display: none; }
+      .slider-component .slider-navigation ul li:before {
+        content: '';
+        border-radius: 50%;
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 10px;
+        height: 10px;
+        background-color: #fff;
+        opacity: .5;
+        box-sizing: border-box; }
+      .slider-component .slider-navigation ul li.active:before {
+        opacity: 1; }
+
+.wedding-component__time-column {
+  text-align: center; }
+  .wedding-component__time-column .timer {
+    font-size: 20px;
+    color: #fff;
+    font-weight: bold; }
+
 body {
-  -webkit-transition: all;
   transition: all;
   background-color: pink; }

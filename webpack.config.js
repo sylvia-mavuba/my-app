@@ -19,7 +19,7 @@ module.exports = function(env){
 
   return {
     entry: {
-      libs: ['angular', 'moment', 'underscore', 'jquery', 'angular-ui-router'],
+      libs: ['angular', 'moment', 'underscore', 'jquery', 'angular-ui-router', 'moment-timezone'],
       app: './src/js/app/app.js'
     },
     output: {

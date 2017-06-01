@@ -1,0 +1,10 @@
+.wedding-component {
+    &__time-column {
+        text-align: center;
+        .timer {
+            font-size: 20px;
+            color: #fff;
+            font-weight: bold;
+        }
+    }
+}

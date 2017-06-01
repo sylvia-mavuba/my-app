@@ -1,41 +1,295 @@
 webpackJsonp([0],{
 
-/***/ 120:
-/***/ (function(module, exports) {
+/***/ 119:
+/***/ (function(module, exports, __webpack_require__) {
 
 //var loadResult = require('./getRestaurants').getRestaurant;
+var moment = __webpack_require__(0);
+var $ = __webpack_require__(2);
 
 module.exports = function ($scope, $http) {
 
-    console.log('je suis dans la home');
-
-    $scope.searchInfo = {};
-
-    $scope.showRestaurant = function (inputValue, $http) {
-        debugger;
-
-        // var renderKeyWord = function() {
-        //     var space = ' ';
-        //     $scope.searchInfo.inputValue;
-        // }
-
-        var showKeyWord = function () {
-            var inputValue = $scope.searchInfo.inputValue;
+    function timer(settings) {
+        //debugger
+        var config = {
+            endDate: '2017-06-24 16:00:00',
+            planeDate: '2017-06-24 16:00:00',
+            maldivesDate: '2017-06-26 9:30:00',
+            timeZone: 'Europe/Dublin',
+            hours: $('#hours'),
+            minutes: $('#minutes'),
+            seconds: $('#seconds'),
+            newSubMessage: 'and should be back online in a few minutes...'
         };
 
-        debugger;
+        //Je m'assure d'avoir un 0 avant les chiffres
+        function prependZero(number) {
+            return number < 10 ? '0' + number : number;
+        }
 
-        // loadResult(inputValue, function(data, $http) {
-        //     debugger
-        // });
+        $.extend(true, config, settings || {});
+
+        var currentTime = moment();
+        //Wedding
+        var endDate = moment.tz(config.endDate, config.timeZone);
+        var diffTime = endDate.valueOf() - currentTime.valueOf(); //valueOf() nombre de milliseconds écoulée
+        var duration = moment.duration(diffTime, 'milliseconds');
+        var days = duration.days();
+        var interval = 1000;
+        var subMessage = $('.sub-message');
+        var clock = $('.clock');
+
+        //Plane
+        var departure = moment.tz(config.planeDate, config.timeZone);
+        var departureDiffTime = departure.valueOf() - currentTime.valueOf();
+        var durationPlane = moment.duration(departureDiffTime, 'milliseconds');
+
+        //Maldives
+        var arrival = moment.tz(config.maldivesDate, config.timeZone);
+        var arrivalDiffTime = arrival.valueOf() - currentTime.valueOf();
+        var durationMaldives = moment.duration(arrivalDiffTime, 'milliseconds');
+
+        if (diffTime < 0) {
+            endEvent(subMessage, config.newSubMessage, clock);
+            return;
+        }
+        //debugger
+
+        if (days > 0) {
+            $('#days').text(prependZero(days));
+            //$('.days').css('display', 'inline-block');
+        }
+
+        var intervalID = setInterval(function () {
+            duration = moment.duration(duration - interval, 'milliseconds');
+            var hours = duration.hours(),
+                minutes = duration.minutes(),
+                seconds = duration.seconds();
+            days = duration.days();
+            if (hours <= 0 && minutes <= 0 && seconds <= 0 && days <= 0) {
+                clearInterval(intervalID);
+                endEvent(subMessage, config.newSubMessage, clock);
+                window.location.reload();
+            }
+            if (days === 0) {
+                $('.days').hide();
+            }
+            $('#days').text(prependZero(days));
+            config.hours.text(prependZero(hours));
+            config.minutes.text(prependZero(minutes));
+            config.seconds.text(prependZero(seconds));
+        }, interval);
+    }
+
+    function endEvent($el, newText, hideEl) {
+        $el.text(newText);
+        hideEl.hide();
+    }
+
+    timer();
+};
+
+// return {
+//     restrict: 'E',
+//     scope: {},
+//     templateUrl: 'countdown.html',
+//     // link: function($scope) {
+//     //     debugger
+//     //     function timer(settings){
+//     //         debugger
+//     //         var config = {
+//     //             endDate: '2017-06-24 16:00:00',
+//     //             planeDate: '2017-06-24 16:00:00',
+//     //             maldivesDate: '2017-06-26 9:30:00',
+//     //             timeZone: 'Europe/Dublin',
+//     //             hours: $('#hours'),
+//     //             minutes: $('#minutes'),
+//     //             seconds: $('#seconds'),
+//     //             newSubMessage: 'and should be back online in a few minutes...'
+//     //         };
+//     //
+//     //         //Je m'assure d'avoir un 0 avant les chiffres
+//     //         function prependZero(number){
+//     //             debugger
+//     //             return number < 10 ? '0' + number : number;
+//     //         }
+//     //
+//     //         $.extend(true, config, settings || {});
+//     //
+//     //         var currentTime = moment();
+//     //         //Wedding
+//     //         var endDate = moment.tz(config.endDate, config.timeZone);
+//     //         var diffTime = endDate.valueOf() - currentTime.valueOf();  //valueOf() nombre de milliseconds écoulée
+//     //         var duration = moment.duration(diffTime, 'milliseconds');
+//     //         var days = duration.days();
+//     //         var interval = 1000;
+//     //         var subMessage = $('.sub-message');
+//     //         var clock = $('.clock');
+//     //
+//     //         //Plane
+//     //         var departure = moment.tz(config.planeDate, config.timeZone);
+//     //         var departureDiffTime = departure.valueOf() - currentTime.valueOf();
+//     //         var durationPlane = moment.duration(departureDiffTime, 'milliseconds');
+//     //
+//     //         //Maldives
+//     //         var arrival = moment.tz(config.maldivesDate, config.timeZone);
+//     //         var arrivalDiffTime = arrival.valueOf() - currentTime.valueOf();
+//     //         var durationMaldives = moment.duration(arrivalDiffTime, 'milliseconds');
+//     //
+//     //
+//     //         if(diffTime < 0){
+//     //             endEvent(subMessage, config.newSubMessage, clock);
+//     //             return;
+//     //         }
+//     //         debugger
+//     //
+//     //         if(days > 0){
+//     //             $('#days').text(prependZero(days));
+//     //             $('.days').css('display', 'inline-block');
+//     //         }
+//     //
+//     //
+//     //         var intervalID = setInterval(function(){
+//     //             duration = moment.duration(duration - interval, 'milliseconds');
+//     //             var hours = duration.hours(),
+//     //                 minutes = duration.minutes(),
+//     //                 seconds = duration.seconds();
+//     //             days = duration.days();
+//     //             if(hours  <= 0 && minutes <= 0 && seconds  <= 0 && days <= 0){
+//     //                 clearInterval(intervalID);
+//     //                 endEvent(subMessage, config.newSubMessage, clock);
+//     //                 window.location.reload();
+//     //             }
+//     //             if(days === 0){
+//     //                 $('.days').hide();
+//     //             }
+//     //             $('#days').text(prependZero(days));
+//     //             config.hours.text(prependZero(hours));
+//     //             config.minutes.text(prependZero(minutes));
+//     //             config.seconds.text(prependZero(seconds));
+//     //         }, interval);
+//     //     }
+//     //
+//     //     function endEvent($el, newText, hideEl){
+//     //         $el.text(newText);
+//     //         hideEl.hide();
+//     //     }
+//     //
+//     //     timer();
+//     // }
+//
+//
+// }
+
+//
+// var now = moment();
+// var dateNow = moment(now).format('MMM Do YY')
+// var jourJ = moment('20170624').format('MMM Do YY');
+// var diff = moment(dateNow).subtract(jourJ, 'days');
+//
+// debugger
+//
+// $scope.searchInfo = {};
+//
+// $scope.showRestaurant = function(inputValue, $http) {
+//
+//
+//     // var renderKeyWord = function() {
+//     //     var space = ' ';
+//     //     $scope.searchInfo.inputValue;
+//     // }
+//
+//     var showKeyWord = function() {
+//         var inputValue = $scope.searchInfo.inputValue;
+//     }
+//
+//
+//
+//
+//
+//     // loadResult(inputValue, function(data, $http) {
+//     //     debugger
+//     // });
+//
+// }
+//
+// $http.get('/api/restaurants')
+//     .then(function (response) {
+//         //$scope.response = response.data;
+//         console.log('mes restaurants: ',response.data);
+//     }, function (response) {
+//         console.log('Error: ', response);
+//     });
+//}
+
+/***/ }),
+
+/***/ 120:
+/***/ (function(module, exports) {
+
+module.exports = function ($scope, $http) {
+    return {
+        restrict: "E",
+        replace: true,
+        templateUrl: "sliderHome.html",
+
+        link: function () {
+            debugger;
+            var touchstartX = 0,
+                touchstartY = 0,
+                touchendX = 0,
+                touchendY = 0;
+
+            var gesturedZone = document.querySelector('.swipe-zone');
+            var $swipeZone = $('.swipe-zone'),
+                $sliderNav = $('.slider-navigation ul li'),
+                id;
+
+            gesturedZone.addEventListener('touchstart', function (e) {
+                touchstartX = e.changedTouches[0].screenX;
+                touchstartY = e.changedTouches[0].screenY;
+            }, false);
+
+            gesturedZone.addEventListener('touchend', function (e) {
+                touchendX = e.changedTouches[0].screenX;
+                touchendY = e.changedTouches[0].screenY;
+                handleGesure(e);
+            }, false);
+
+            var handleGesure = function (e) {
+                if (touchendX < touchstartX) {
+                    swipe(e, 'left');
+                }
+                if (touchendX > touchstartX) {
+                    swipe(e, 'right');
+                }
+                // if (touchendY < touchstartY) {
+                //     console.log(swiped + 'down!');
+                // }
+                // if (touchendY > touchstartY) {
+                //     console.log(swiped + 'up!');
+                // }
+                // if (touchendY == touchstartY) {
+                //     console.log('tap!');
+                // }
+            };
+
+            var swipe = function (e, direction) {
+                var $target = $(e.target).parents('.slider-component__slide');
+
+                if (direction === 'left') {
+                    id = $target.next().data('slide');
+                } else if (direction === 'right') {
+                    id = $target.prev().data('slide');
+                }
+                if (typeof id === 'number') {
+                    $swipeZone.css({ 'transform': 'translateX(' + -100 * id + '%)' });
+                    $sliderNav.removeClass('active');
+                    $sliderNav.eq(id).addClass('active');
+                }
+            };
+        }
     };
-
-    $http.get('/api/restaurants').then(function (response) {
-        //$scope.response = response.data;
-        console.log('mes restaurants: ', response.data);
-    }, function (response) {
-        console.log('Error: ', response);
-    });
 };
 
 /***/ }),
@@ -57,7 +311,9 @@ module.exports = function ($scope, $http) {
 __webpack_require__(121);
 
 var angular = __webpack_require__(1);
-var home = __webpack_require__(120);
+var home = __webpack_require__(119);
+var sliderHome = __webpack_require__(120);
+//var countdown        = require('./home/countdownDirective.js');
 //var articlesCtrl     = require('./articles/articleCtrl.js');
 //var articlesService  = require('./articles/articleService.js');
 
@@ -88,34 +344,24 @@ var home = __webpack_require__(120);
     });
 
     // SERVICES ============================================
-    blogApp.service('articleService', ['$http', function ($http) {
+    blogApp.service('articleService', ['$http', function ($http, $scope) {
+
         this.getApiArticles = function () {
             return $http.get('/api/articles')
             //.success ne marche pas avec angular 1.6 ??
             .then(function (response) {
-                debugger;
                 return response;
-
-                // if(response.data) {
-                //     for(var i=0; i < response.data.articles.length; i++) {
-                //         debugger
-                //         $scope.articles.text = response.data.articles[i].text;
-                //     }
-                // }
-
-
-                console.log('mes articles :', $scope.articles);
+                $scope.articles = response.data;
             }, function (data) {
                 console.log('Error: ', data);
             });
         };
 
         this.createArticle = function () {
-            return $http.post('/api/articles', $scope.bookData).then(function (response) {
-                debugger;
+            return $http.post('/api/articles').then(function (response) {
                 $scope.bookData = {};
-                $scope.bookData.article = response.data;
-                console.log(data);
+                $scope.articles = response.data;
+                console.log(response.data);
             }, function (data) {
                 console.log('Error: ', data);
             });
@@ -130,18 +376,62 @@ var home = __webpack_require__(120);
             });
         };
     }]);
+
     // CONTROLLERS ============================================
     blogApp.controller('homeCtrl', home);
 
-    blogApp.controller('articlesCtrl', ['$scope', 'articleService', function ($scope, articleService) {
+    blogApp.controller('articlesCtrl', ['$scope', 'articleService', '$http', function ($scope, articleService, $http) {
 
-        $scope.articlesData = {};
-
-        var receiveArticleData = articleService.getApiArticles().then(function (response) {
+        articleService.getApiArticles = function (articleData) {
             debugger;
-            $scope.articles = response.data;
-        });
+        };
+
+        // $scope.articlesData = {};
+        // this.getApiArticles = function() {
+        //      $http.get('/api/articles')
+        //         //.success ne marche pas avec angular 1.6 ??
+        //         .then(function (response) {
+        //             debugger
+        //             $scope.articles = response.data;
+        //     }, function (data) {
+        //         console.log('Error: ', data);
+        //     });
+        //
+        // };
+
+
+        // var receiveArticleData = articleService.getApiArticles().then(function(response) {
+        //
+        //
+        //     $scope.articles = response.data;
+        //
+        // });
+        //
+        //
+        // $scope.renderTitleArticles = articleService.createArticle().then(function(response) {
+        //     if(response.data) {
+        //         for(var i=0; i < response.data.articles.length; i++) {
+        //
+        //             response.data.articles[i].text;
+        //         }
+        //     }
+        // });
     }]);
+
+    // DIRECTIVES ============================================
+
+    blogApp.directive('sliderHome', sliderHome);
+
+    // blogApp.directive('countdown', function() {
+    //     return {
+    //         restrict: 'E',
+    //         templateUrl: 'countdown.html'
+    //         scope: {},
+    //         link: function($scope) {
+    //             debugger
+    //         }
+    //     }
+    // });
 })();
 
 /***/ })
